@@ -31,7 +31,8 @@ int main()
 		}
 		if (choice == 0)
 		{
-			printf("再见!\n");
+			printf("感谢使用!\n");
+			saveAllPersonInfo(&g_address_book);
 			break;
 		}
 		table[choice - 1](&g_address_book);

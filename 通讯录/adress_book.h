@@ -1,13 +1,13 @@
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
-#include "assert.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
 
 /*---用户信息---*/
 typedef struct PersonInfo
 {
-	char name[1024];
-	char phone[1024];
+	char name[20];
+	char phone[12];
 } PersonInfo;
 
 /*---通讯录---*/
@@ -47,3 +47,9 @@ void displayAllPersonInfo(AddressBook* addr_book);
 
 /*---清除所有用户---*/
 void clearAllPersonInfo(AddressBook* addr_book);
+
+/*---文件加载到内存---*/
+void loadAllPersonInfo(AddressBook* addr_book);
+
+/*---内存加载到文件---*/
+void saveAllPersonInfo(AddressBook* addr_book);

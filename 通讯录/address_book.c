@@ -15,6 +15,7 @@ void Init(AddressBook* addr_book)
 	addr_book->capacity = 1;
 	addr_book->infos = (PersonInfo*)malloc(sizeof(PersonInfo) 
 		* addr_book->capacity);
+	loadAllPersonInfo(addr_book);
 }
 
 void capacityEnlargement(AddressBook* addr_book)
@@ -170,4 +171,43 @@ void clearAllPersonInfo(AddressBook* addr_book)
 	}
 	addr_book->size = 0;
 	printf("数据已清空! \n");
+}
+
+void saveAllPersonInfo(AddressBook* addr_book)
+{
+	assert(addr_book != NULL);
+	FILE* pf = fopen("addr_book.dat", "w");
+	if (pf == NULL)
+	{
+		perror("error");
+		exit(EXIT_SUCCESS);
+	}
+	int i = 0;
+	for (i = 0; i < addr_book->size; ++i)
+	{
+		fwrite(addr_book->infos + i, sizeof(PersonInfo), 1, pf);
+	}
+	fclose(pf);
+}
+
+void loadAllPersonInfo(AddressBook* addr_book)
+{
+	assert(addr_book != NULL);
+	FILE* pf = fopen("addr_book.dat", "r");
+	if (pf == NULL)
+	{
+		perror("error");
+		exit(EXIT_SUCCESS);
+	}
+	int i = 0;
+	while (fread(addr_book->infos + i, sizeof(PersonInfo), 1, pf))
+	{
+		++addr_book->size;
+		if (addr_book->size >= addr_book->capacity)
+		{
+			capacityEnlargement(addr_book);
+		}
+		++i;
+	}
+	fclose(pf);
 }
